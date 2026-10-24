@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  code, pre, .font-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.article-preview h1 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+
+.article-preview h2 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-preview p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+
+.article-preview pre {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.article-preview blockquote {
+  font-size: 0.8125rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(12, 129, 118, 0.3);
+  border-radius: 0.5rem;
+  background-color: rgba(12, 129, 118, 0.06);
+  margin: 0.75rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

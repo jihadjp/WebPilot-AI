@@ -1,0 +1,95 @@
+{
+  "users": [
+    {
+      "id": "usr_primary_researcher",
+      "email": "researcher@webpilot.local",
+      "displayName": "Primary Researcher (Dev Profile)",
+      "preferredLanguage": "en",
+      "planIdentifier": "pro_scholar",
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    },
+    {
+      "id": "usr_secondary_reviewer",
+      "email": "reviewer@webpilot.local",
+      "displayName": "Secondary Reviewer (Isolation Test Profile)",
+      "preferredLanguage": "bn",
+      "planIdentifier": "free_researcher",
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": "ws_systems_engineering",
+      "ownerUserId": "usr_primary_researcher",
+      "name": "Distributed Systems & DBs",
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    },
+    {
+      "id": "ws_security_audits",
+      "ownerUserId": "usr_primary_researcher",
+      "name": "Security & Cryptography",
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    },
+    {
+      "id": "ws_reviewer_private",
+      "ownerUserId": "usr_secondary_reviewer",
+      "name": "Reviewer Private Workspace",
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    }
+  ],
+  "savedItems": [
+    {
+      "id": "item_seed_raft_1",
+      "ownerUserId": "usr_primary_researcher",
+      "workspaceId": "ws_systems_engineering",
+      "pageUrl": "https://systems.stanford.edu/papers/raft-consensus-protocol",
+      "pageTitle": "Raft Consensus Algorithm: Leader Election, Log Replication & Safety Invariants",
+      "hostname": "systems.stanford.edu",
+      "summary": "Raft decomposes distributed state-machine consensus into Leader Election, Log Replication, and Safety. Randomized election timeouts (150ms–300ms) prevent split votes, while majority quorums guarantee Leader Completeness across terms.",
+      "personalNotes": "Compare Raft Leader Completeness invariant with Multi-Paxos phase-1a quorum intersection.",
+      "contentHash": "wp_seed_raft_01",
+      "sourceReferences": [
+        {
+          "blockId": "S2",
+          "heading": "1. Server States and Terms",
+          "excerpt": "At any given time, each server in a Raft cluster is in one of three states: Leader, Follower, or Candidate.",
+          "relevanceReason": "Defines core Raft server state machine"
+        }
+      ],
+      "createdAt": "2026-10-24T23:15:59.602Z",
+      "updatedAt": "2026-10-24T23:15:59.602Z"
+    }
+  ],
+  "conversations": [],
+  "messages": [],
+  "usageEvents": [
+    {
+      "ownerUserId": "usr_primary_researcher",
+      "operation": "summarize",
+      "modelIdentifier": "webpilot-extractive-v1",
+      "inputTokenCount": 1094,
+      "outputTokenCount": 77,
+      "estimatedCost": 0,
+      "requestStatus": "succeeded",
+      "id": "usg_ef8e89ac89b2f420",
+      "createdAt": "2026-10-24T23:17:17.269Z"
+    }
+  ],
+  "sessions": [
+    {
+      "token": "wp_sess_primary_default",
+      "userId": "usr_primary_researcher",
+      "expiresAt": "2026-11-23T23:15:59.602Z"
+    },
+    {
+      "token": "wp_sess_secondary_default",
+      "userId": "usr_secondary_reviewer",
+      "expiresAt": "2026-11-23T23:15:59.602Z"
+    }
+  ]
+}

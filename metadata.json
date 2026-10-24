@@ -1,0 +1,6 @@
+{
+  "name": "WebPilot AI",
+  "description": "Source-grounded AI browser extension and side panel assistant for webpage summaries, contextual Q&A, selected-text explanations, study quizzes, and research library management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

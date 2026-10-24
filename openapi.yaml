@@ -1,0 +1,198 @@
+openapi: 3.1.0
+info:
+  title: WebPilot AI Backend API
+  version: 1.0.0
+  description: >
+    Source-grounded AI browser extension backend providing webpage summarization,
+    contextual Q&A, selected-text explanations, study quiz generation, and per-user
+    research library persistence.
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Local & AI Studio Development Server
+components:
+  securitySchemes:
+    BearerSession:
+      type: http
+      scheme: bearer
+  schemas:
+    SourceReference:
+      type: object
+      required: [blockId, excerpt]
+      properties:
+        blockId:
+          type: string
+          example: S2
+        heading:
+          type: string
+        excerpt:
+          type: string
+        relevanceReason:
+          type: string
+    ExtractedBlock:
+      type: object
+      required: [id, tag, text, charCount]
+      properties:
+        id:
+          type: string
+        heading:
+          type: string
+        tag:
+          type: string
+          enum: [h1, h2, h3, p, li, pre, blockquote]
+        text:
+          type: string
+        charCount:
+          type: integer
+    PageContextPayload:
+      type: object
+      required:
+        - pageUrl
+        - pageTitle
+        - hostname
+        - blocks
+        - totalCharacters
+        - wasTruncated
+        - capturedAt
+        - consentConfirmed
+        - contentHash
+      properties:
+        pageUrl:
+          type: string
+          format: uri
+        pageTitle:
+          type: string
+        hostname:
+          type: string
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtractedBlock'
+        totalCharacters:
+          type: integer
+        wasTruncated:
+          type: boolean
+        capturedAt:
+          type: string
+          format: date-time
+        consentConfirmed:
+          type: boolean
+          enum: [true]
+        contentHash:
+          type: string
+paths:
+  /health:
+    get:
+      summary: Service and AI provider health check
+      responses:
+        '200':
+          description: Service status and active AI provider metadata
+  /ai/summarize:
+    post:
+      summary: Generate a source-grounded webpage summary
+      security:
+        - BearerSession: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pageContext, format, language]
+              properties:
+                pageContext:
+                  $ref: '#/components/schemas/PageContextPayload'
+                format:
+                  type: string
+                  enum: [short, detailed, takeaways, step_by_step, bn_summary, en_summary]
+                language:
+                  type: string
+                  enum: [en, bn]
+      responses:
+        '200':
+          description: Verified summary with mapped source references
+        '401':
+          description: Missing or invalid session token
+        '429':
+          description: Rate limit exceeded
+  /ai/ask:
+    post:
+      summary: Ask a contextual question grounded in captured webpage blocks
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Grounded answer with evidenceSufficient status and source references
+  /ai/explain-selection:
+    post:
+      summary: Explain, translate, or analyze selected webpage text
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Structured explanation, examples, and notes
+  /ai/generate-quiz:
+    post:
+      summary: Generate schema-validated study quiz, flashcards, and revision notes
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Validated 5-question MCQ quiz and study pack
+  /library:
+    get:
+      summary: List authenticated user's saved research items
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Paginated list of saved items owned by user
+    post:
+      summary: Save a summary and notes to the authenticated user's library
+      security:
+        - BearerSession: []
+      responses:
+        '201':
+          description: Created library item
+  /library/{id}:
+    patch:
+      summary: Update personal notes or workspace on an owned library item
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Updated library item
+        '403':
+          description: Forbidden ownership violation
+    delete:
+      summary: Delete an owned library item
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Deleted confirmation
+        '403':
+          description: Forbidden ownership violation
+  /me:
+    get:
+      summary: Retrieve current authenticated user profile and workspaces
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: User profile and workspaces
+  /me/usage:
+    get:
+      summary: Retrieve AI quota and token usage accounting
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Usage statistics and recent events
+  /auth/logout:
+    post:
+      summary: Revoke current authentication session token
+      security:
+        - BearerSession: []
+      responses:
+        '200':
+          description: Session revoked

@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: webpilot_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: webpilot
+      POSTGRES_PASSWORD: webpilot_local_dev_password
+      POSTGRES_DB: webpilot_ai
+    ports:
+      - "5432:5432"
+    volumes:
+      - webpilot_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U webpilot -d webpilot_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  webpilot_pgdata:
